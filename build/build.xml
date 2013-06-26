@@ -35,14 +35,18 @@
 		<copy todir="${tmp.dir}/files">
 			<fileset dir="${class.dir}" />
 			<fileset dir="${java.dir}">
-				<include name="*.properties" />
+				<include name="**/*.properties" />
 			</fileset>
 		</copy>
 
 
 		<jar jarfile="${release.dir}\jerseydoc.jar" basedir="${tmp.dir}/files">
 		</jar>
-		
+
+		<copy todir="${release.dir}">
+			<fileset dir="${lib.dir}" />			
+		</copy>
+
 	</target>
 
 	<target name="clean" description="clean up">
