@@ -2,7 +2,8 @@
 
 	<!-- set global properties for this build -->
 	<property name="src.dir" location="../src" />
-	<property name="java.dir" location="${src.dir}/main" />
+	<property name="java.dir" location="${src.dir}/java/main" />
+	<property name="test.java.dir" location="${src.dir}/java/test" />
 	<property name="tmp.dir" location="../tmp" />
 	<property name="class.dir" location="../classes" />
 	<property name="release.dir" location="../release" />
@@ -43,8 +44,32 @@
 		<jar jarfile="${release.dir}\jerseydoc.jar" basedir="${tmp.dir}/files">
 		</jar>
 
-		<copy todir="${release.dir}">
-			<fileset dir="${lib.dir}" />			
+
+		<!-- Create example directory -->
+		<mkdir dir="${release.dir}/example" />
+		<mkdir dir="${release.dir}/example/build" />
+		<mkdir dir="${release.dir}/example/lib" />
+		<mkdir dir="${release.dir}/example/src" />
+
+
+		<copy todir="${release.dir}/example/build">
+			<fileset dir="${src.dir}/ant" />
+		</copy>
+
+		<copy todir="${release.dir}/example/lib">
+			<fileset dir="${lib.dir}" />
+		</copy>
+
+		<copy todir="${release.dir}/example/lib">
+			<fileset dir="${release.dir}">
+				<include name="jerseydoc.jar" />
+			</fileset>
+		</copy>
+
+		<copy todir="${release.dir}/example/src">
+			<fileset dir="${test.java.dir}">
+				<include name="com/rabidgremlin/example/**/*" />
+			</fileset>
 		</copy>
 
 	</target>

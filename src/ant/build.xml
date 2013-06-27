@@ -1,0 +1,78 @@
+<project name="Example" default="doc" basedir=".">
+
+	<!-- set global properties for this build -->
+	<property name="src.dir" location="../src" />
+	<property name="java.dir" location="${src.dir}" />
+	<property name="tmp.dir" location="../tmp" />
+	<property name="class.dir" location="../classes" />
+	<property name="out.dir" location="../out" />
+	<property name="lib.dir" location="../lib" />
+
+	<!-- Create the build directory structure used by compile -->
+	<target name="init">
+		<mkdir dir="${tmp.dir}" />
+		<mkdir dir="${class.dir}" />
+		<mkdir dir="${out.dir}" />
+	</target>
+
+	<!-- Clean up folders -->
+	<target name="clean" description="clean up">
+		<delete dir="${tmp.dir}" />
+		<delete dir="${class.dir}" />
+		<delete dir="${out.dir}" />
+	</target>
+
+	<!-- Compile the code -->
+	<target name="compile" depends="init">
+		<javac srcdir="${java.dir}" destdir="${class.dir}" target="1.6" source="1.6">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="doc" depends="clean,compile">
+
+		<!-- Set up classpath for doclet. These are the only jars required for the doclet -->
+		<path id="doclet.path">
+			<fileset dir="${lib.dir}">
+				<include name="jerseydoc.jar" />
+				<include name="jersey-core-1.14.jar" />
+			</fileset>
+		</path>
+
+
+		<!-- Set up classpath for app so that Javadoc can find all the classes -->
+		<path id="app.javadoc.classpath">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+
+		<!-- Generate audit report -->
+		<javadoc packagenames="com.rabidgremlin.example.resources" classpathref="app.javadoc.classpath" author="true" version="true" private="true" sourcepath="${java.dir}" doclet="com.rabidgremlin.jerseydoc.JerseyDoclet" docletpathref="doclet.path">
+			<arg value="-o" />
+			<arg value="${out.dir}/example_audit.csv" />
+			<arg value="-baseUrl" />
+			<arg value="http://somedomain/rest/" />
+			<arg value="-type" />
+			<arg value="audit" />
+		</javadoc>
+
+		<!-- Generate full report in markdown -->
+		<javadoc packagenames="com.rabidgremlin.example.resources" classpathref="app.javadoc.classpath" author="true" version="true" private="true" sourcepath="${java.dir}" doclet="com.rabidgremlin.jerseydoc.JerseyDoclet" docletpathref="doclet.path">
+			<arg value="-o" />
+			<arg value="${out.dir}/example_services.txt" />
+			<arg value="-baseUrl" />
+			<arg value="http://somedomain/rest/" />
+			<arg value="-title" />
+			<arg value="Example REST Services" />
+		</javadoc>
+
+
+	</target>
+
+
+</project>
