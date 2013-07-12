@@ -134,6 +134,7 @@ public class DocGenerator
         if (requestParam != null)
         {
           restMethod.setRequestTypeName(requestParam.type().simpleTypeName());
+          restMethod.setRequestTypeQualifiedName(requestParam.type().toString());
           restMethod.setRequestComments(getParamComment(method.paramTags(), requestParam.name()));
           restMethod.setSampleRequest(generateExample(requestParam.type()));
           restMethod.setRequestClassDoc(requestParam.type().asClassDoc());
@@ -143,6 +144,7 @@ public class DocGenerator
             && !method.returnType().qualifiedTypeName().equals("void"))
         {
           restMethod.setResponseTypeName(method.returnType().simpleTypeName());
+          restMethod.setResponseTypeQualifiedName(method.returnType().toString());
           restMethod.setSampleResponse(generateExample(method.returnType()));
           restMethod.setResponseClassDoc(method.returnType().asClassDoc());
         }

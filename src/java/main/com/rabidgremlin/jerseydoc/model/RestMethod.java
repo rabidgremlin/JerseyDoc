@@ -33,6 +33,9 @@ public class RestMethod
   private List<RestDocItem> pathParams = new ArrayList<RestDocItem>();
   private List<RestDocItem> queryParams = new ArrayList<RestDocItem>();
 
+  private String requestTypeQualifiedName;
+  private String responseTypeQualifiedName;
+
   public String getName()
   {
     return name;
@@ -203,6 +206,26 @@ public class RestMethod
     this.requestClassDoc = requestClassDoc;
   }
 
+  public String getRequestTypeQualifiedName()
+  {
+    return requestTypeQualifiedName;
+  }
+
+  public void setRequestTypeQualifiedName(String requestTypeQualifiedName)
+  {
+    this.requestTypeQualifiedName = requestTypeQualifiedName;
+  }
+
+  public String getResponseTypeQualifiedName()
+  {
+    return responseTypeQualifiedName;
+  }
+
+  public void setResponseTypeQualifiedName(String responseTypeQualifiedName)
+  {
+    this.responseTypeQualifiedName = responseTypeQualifiedName;
+  }
+
   @Override
   public String toString()
   {
@@ -211,9 +234,9 @@ public class RestMethod
         + ", sampleResponse=" + sampleResponse + ", responseComments=" + responseComments + ", requestComments="
         + requestComments + ", requestTypeName=" + requestTypeName + ", responseTypeName=" + responseTypeName
         + ", responseClassDoc=" + responseClassDoc + ", requestClassDoc=" + requestClassDoc + ", responseMethodStatuses="
-        + responseMethodStatuses + ", pathParams=" + pathParams + ", queryParams=" + queryParams + "]";
+        + responseMethodStatuses + ", pathParams=" + pathParams + ", queryParams=" + queryParams
+        + ", requestTypeQualifiedName=" + requestTypeQualifiedName + ", responseTypeQualifiedName=" + responseTypeQualifiedName
+        + "]";
   }
 
-  
-  
 }

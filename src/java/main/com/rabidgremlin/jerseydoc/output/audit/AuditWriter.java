@@ -15,6 +15,8 @@ public class AuditWriter
   public void writeAsCSV(Writer writer, RestApplication application) throws IOException
   {
     out = new PrintWriter(writer);
+    
+    out.println("Resource class,Method name,HTTP Method,Service URL,Request class, Response class");
 
     for (RestMethod restMethod : application.getMethods())
     {
@@ -30,7 +32,7 @@ public class AuditWriter
   private void writeMethod(RestMethod restMethod)
   {
     // out.print(restMethod.getResourceClassDoc().name());
-    out.print(restMethod.getMethodDoc().containingClass().name());
+    out.print(restMethod.getMethodDoc().containingClass().qualifiedName());
     out.print(",");
 
     out.print(restMethod.getName());
@@ -40,6 +42,12 @@ public class AuditWriter
     out.print(",");
 
     out.print(Util.makeUrl(restMethod));
+    out.print(",");
+    
+    out.print(restMethod.getRequestTypeQualifiedName()==null?"":restMethod.getRequestTypeQualifiedName());
+    out.print(",");
+    
+    out.print(restMethod.getResponseTypeQualifiedName()==null?"":restMethod.getResponseTypeQualifiedName());    
 
     out.println();
   }
