@@ -36,6 +36,8 @@ public class RestMethod
   private String requestTypeQualifiedName;
   private String responseTypeQualifiedName;
 
+  private List<RestMethodAuditNote> restMethodAuditNotes = new ArrayList<RestMethodAuditNote>();
+
   public String getName()
   {
     return name;
@@ -226,6 +228,16 @@ public class RestMethod
     this.responseTypeQualifiedName = responseTypeQualifiedName;
   }
 
+  public List<RestMethodAuditNote> getRestMethodAuditNotes()
+  {
+    return restMethodAuditNotes;
+  }
+
+  public void setRestMethodAuditNotes(List<RestMethodAuditNote> restMethodAuditNotes)
+  {
+    this.restMethodAuditNotes = restMethodAuditNotes;
+  }
+
   @Override
   public String toString()
   {
@@ -236,7 +248,7 @@ public class RestMethod
         + ", responseClassDoc=" + responseClassDoc + ", requestClassDoc=" + requestClassDoc + ", responseMethodStatuses="
         + responseMethodStatuses + ", pathParams=" + pathParams + ", queryParams=" + queryParams
         + ", requestTypeQualifiedName=" + requestTypeQualifiedName + ", responseTypeQualifiedName=" + responseTypeQualifiedName
-        + "]";
+        + ", restMethodAuditNotes=" + restMethodAuditNotes + "]";
   }
 
 }

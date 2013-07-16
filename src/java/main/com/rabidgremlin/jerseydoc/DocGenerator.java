@@ -12,6 +12,7 @@ import com.rabidgremlin.jerseydoc.model.HttpMethod;
 import com.rabidgremlin.jerseydoc.model.RestApplication;
 import com.rabidgremlin.jerseydoc.model.RestDocItem;
 import com.rabidgremlin.jerseydoc.model.RestMethod;
+import com.rabidgremlin.jerseydoc.model.RestMethodAuditNote;
 import com.rabidgremlin.jerseydoc.model.RestMethodResponseStatus;
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.AnnotationValue;
@@ -155,6 +156,8 @@ public class DocGenerator
         extractPathParams(method, restMethod);
 
         extractResponseStatuses(method, restMethod);
+        
+        extractAuditNotes(method, restMethod);
 
         LOGGER.info("Added " + restMethod.getUrl() + " " + restMethod.getName());
         //LOGGER.info("Method " + restMethod);
@@ -302,6 +305,42 @@ public class DocGenerator
     }
 
   }
+  
+  
+  
+  private void extractAuditNotes(MethodDoc method, RestMethod restMethod)
+  {
+    Tag[] auditNoteTags = method.tags("audit.note");
+
+    if (auditNoteTags.length > 0)
+    {
+      for (Tag tag : auditNoteTags)
+      {
+        LOGGER.fine("TAGS: " + tag);
+
+        String[] parts = tag.text().split(" ", 2);
+
+        if (parts.length != 2)
+        {
+          LOGGER.info(method.qualifiedName() + " has malformed audit.note tag: " + tag.toString());
+          continue;
+        }
+
+        LOGGER.fine("PARTS: " + parts[0] + " - " + parts[1]);
+
+        RestMethodAuditNote an = new RestMethodAuditNote();
+        an.setNoteId(parts[0]);
+        an.setNote(parts[1]);
+
+        restMethod.getRestMethodAuditNotes().add(an);
+      }
+
+      LOGGER.fine("Added " + restMethod.getRestMethodAuditNotes().size() + " audit notes..");
+    }
+
+  }
+  
+  
 
   private String generateExample(Type returnType)
   {

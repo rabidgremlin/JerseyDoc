@@ -43,6 +43,7 @@ public class TodoResource
    * @return The list of todos.
    * 
    * @response.status OK If the service call was successful.
+   * @audit.note NOTE1 This is a sample audit note.
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
