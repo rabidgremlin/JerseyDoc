@@ -86,7 +86,7 @@ public class DocGenerator
     MethodDoc[] methods = classDoc.methods();
     for (MethodDoc method : methods)
     {
-      if (getPath(method.annotations()) != null)
+      if (getPath(method.annotations()) != null || getMethod(method.annotations()) != null)
       {
         return true;
       }
